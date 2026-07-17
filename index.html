@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercedes-Benz - Talent Acquisition Portal For Teleperformance</title>
+    <style>
+        :root {
+            --bg-metallic: radial-gradient(circle at 50% 30%, #151a24 0%, #07090d 100%);
+            --card-bg: rgba(18, 22, 31, 0.85);
+            --border-chrome: linear-gradient(135deg, #8a9ba8 0%, #4a5568 50%, #1e293b 100%);
+            --border-dark: #222c3f;
+            --accent-silver: #d1d5db;
+            --accent-active: #ffffff;
+            --text-main: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --success-green: #10b981;
+            --glow-silver: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        body {
+            background: var(--bg-metallic);
+            color: var(--text-main);
+            min-height: 1080px;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Luxury Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 3rem;
+            border-bottom: 1px solid var(--border-dark);
+            background: rgba(7, 9, 13, 0.9);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Mercedes-Benz SVG Logo */
+        .logo-wrap {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .m-logo {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 1.5;
+            stroke-miterlimit: 10;
+        }
+
+        .portal-title-banner {
+            font-size: 1.25rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            border-left: 1px solid #4b5563;
+            padding-left: 1.5rem;
+        }
+
+        .header-right {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Container & Transitions */
+        .container {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view {
+            display: none;
+            width: 100%;
+            max-width: 520px;
+            animation: luxeFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        @keyframes luxeFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Premium Card styling */
+        .luxe-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-dark);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), var(--glow-silver);
+            backdrop-filter: blur(16px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Chrome Top Highlight Bar */
+        .luxe-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            opacity: 0.6;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .card-header h2 {
+            font-size: 1.85rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 1.85rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 0.6rem;
+        }
+
+        .input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .luxe-input {
+            width: 100%;
+            background: rgba(7, 9, 13, 0.6);
+            border: 1px solid var(--border-dark);
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 300;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .luxe-input:focus {
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            background: rgba(7, 9, 13, 0.85);
+        }
+
+        /* Custom Date Picker style overrides */
+        .luxe-input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .luxe-input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+
+        /* Buttons */
+        .btn-luxe {
+            width: 100%;
+            background: #ffffff;
+            color: #07090d;
+            border: 1px solid #ffffff;
+            padding: 1.1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-top: 1rem;
+        }
+
+        .btn-luxe:hover {
+            background: transparent;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-luxe:active {
+            transform: scale(0.98);
+        }
+
+        /* Hint Box */
+        .hint-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed var(--border-dark);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        .hint-box strong {
+            color: #ffffff;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--success-green);
+            color: #ffffff;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            animation: luxeFadeIn 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast-success-icon {
+            color: var(--success-green);
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header containing Mercedes Logo & Banner -->
+    <header>
+        <div class="header-left">
+            <div class="logo-wrap" id="logo-top-left">
+                <!-- Mercedes Three-Pointed Star SVG -->
+                <svg class="m-logo" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45"></circle>
+                    <path d="M 50 5 L 50 50 Z" stroke-width="1.5"></path>
+                    <path d="M 50 50 L 11.5 72 Z" stroke-width="1.5"></path>
+                    <path d="M 50 50 L 88.5 72 Z" stroke-width="1.5"></path>
+                    <polygon points="50,5 47,44 50,50 53,44" fill="#ffffff" stroke="none"></polygon>
+                    <polygon points="11.5,72 45,53 50,50 42,48" fill="#ffffff" stroke="none"></polygon>
+                    <polygon points="88.5,72 55,53 50,50 58,48" fill="#ffffff" stroke="none"></polygon>
+                </svg>
+            </div>
+            <div class="portal-title-banner" id="portal-banner-text">Talent Acquisition Portal</div>
+        </div>
+        <div class="header-right" id="user-display-status">
+            SECURE ACCESS
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- LOGIN VIEW -->
+        <div id="view-login" class="view active">
+            <div class="luxe-card">
+                <div class="card-header">
+                    <h2>Sign In</h2>
+                    <p>Enter your recruiter credentials to access reports</p>
+                </div>
+
+                <form id="form-login" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="username-input">Recruiter Email</label>
+                        <div class="input-wrap">
+                            <input type="email" id="username-input" class="luxe-input"
+                                placeholder="name@mercedes-benz.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password-input">Security Password</label>
+                        <div class="input-wrap">
+                            <input type="password" id="password-input" class="luxe-input"
+                                placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-login" class="btn-luxe">Authenticate</button>
+                </form>
+
+                <div class="hint-box">
+                    <strong>Suggested Credentials for Agent:</strong><br>
+                    Email: <code>recruiter@mercedes-benz.com</code><br>
+                    Password: <code>PremiumCareer2026</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- REPORT VIEW -->
+        <div id="view-report" class="view">
+            <div class="luxe-card">
+                <div class="card-header">
+                    <h2>Export Report</h2>
+                    <p>Select date range to retrieve candidate applications</p>
+                </div>
+
+                <form id="form-report" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="starting-date">Starting Date</label>
+                        <div class="input-wrap">
+                            <input type="date" id="starting-date" class="luxe-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ending-date">Ending Date</label>
+                        <div class="input-wrap">
+                            <input type="date" id="ending-date" class="luxe-input" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-download-csv" class="btn-luxe">Generate &amp; Download CSV</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notify" class="toast">
+        <span class="toast-success-icon">&checkmark;</span>
+        <span id="toast-text">Report exported successfully!</span>
+    </div>
+
+    <script>
+        // Sample Candidate Recruitment Data for CSV Generation
+        const candidateData = [
+            { name: "John Doe", role: "Software Engineer - Autonomous Driving", date: "2026-07-01", score: 92, status: "Offered" },
+            { name: "Sarah Jenkins", role: "Product Manager - Digital Cabin", date: "2026-07-03", score: 88, status: "Interviewing" },
+            { name: "Michael Chang", role: "Frontend Developer - UI Design", date: "2026-07-05", score: 85, status: "Screened" },
+            { name: "Elena Rostova", role: "Data Scientist - Fleet Analytics", date: "2026-07-08", score: 95, status: "Offered" },
+            { name: "David Kim", role: "DevOps Architect - Cloud Systems", date: "2026-07-10", score: 90, status: "Technical Test" },
+            { name: "Sophia Martinez", role: "Talent Acquisition Specialist", date: "2026-07-12", score: 87, status: "First Stage" },
+            { name: "James Wilson", role: "QA Engineer - Safety Control", date: "2026-07-15", score: 81, status: "Rejected" },
+            { name: "Amelie Dubois", role: "UX Designer - In-Car Entertainment", date: "2026-07-18", score: 94, status: "Offered" },
+            { name: "Arjun Mehta", role: "Embedded Systems Engineer", date: "2026-07-20", score: 89, status: "Technical Test" }
+        ];
+
+        // Page Transitions
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        // Show Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast-notify');
+            document.getElementById('toast-text').textContent = message;
+            toast.style.display = 'flex';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 4000);
+        }
+
+        // Login Submit Handling
+        document.getElementById('btn-login').addEventListener('click', () => {
+            const email = document.getElementById('username-input').value;
+            const pass = document.getElementById('password-input').value;
+
+            if (email && pass) {
+                // Update User Display status
+                document.getElementById('user-display-status').textContent = `RECRUITER: ${email.split('@')[0].toUpperCase()}`;
+                showView('view-report');
+                showToast("Access Authenticated. Welcome to the portal.");
+            }
+        });
+
+        // Trigger on Enter inside forms
+        document.getElementById('form-login').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('btn-login').click();
+            }
+        });
+
+        document.getElementById('form-report').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('btn-download-csv').click();
+            }
+        });
+
+        // CSV Compilation & Download Handling
+        document.getElementById('btn-download-csv').addEventListener('click', () => {
+            const startVal = document.getElementById('starting-date').value;
+            const endVal = document.getElementById('ending-date').value;
+
+            if (!startVal || !endVal) {
+                alert("Please fill in both the Starting Date and Ending Date.");
+                return;
+            }
+
+            const startDate = new Date(startVal);
+            const endDate = new Date(endVal);
+
+            if (startDate > endDate) {
+                alert("The Starting Date cannot be after the Ending Date.");
+                return;
+            }
+
+            // Filter data by dates
+            const filtered = candidateData.filter(item => {
+                const appDate = new Date(item.date);
+                return appDate >= startDate && appDate <= endDate;
+            });
+
+            // Convert to CSV
+            let csvContent = "Candidate Name,Applied Position,Application Date,Assessment Score,Status\n";
+            filtered.forEach(c => {
+                csvContent += `"${c.name}","${c.role}","${c.date}",${c.score},"${c.status}"\n`;
+            });
+
+            // Trigger real browser CSV download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "talent_acquisition_records.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showToast(`Report downloaded: ${filtered.length} candidate record(s) found.`);
+        });
+    </script>
+</body>
+
+</html>

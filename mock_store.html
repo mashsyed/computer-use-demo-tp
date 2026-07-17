@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Store - Mock</title>
+    <!-- Modern Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151c2c;
+            --accent-primary: #4285f4;
+            --accent-indigo: #4f46e5;
+            --text-main: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --border-color: #243049;
+            --success-color: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 1080px;
+        }
+
+        /* Top Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 3rem;
+            border-bottom: 2px solid var(--border-color);
+            background: rgba(21, 28, 44, 0.95);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .google-logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .google-g { color: #4285f4; }
+        .google-o1 { color: #ea4335; }
+        .google-o2 { color: #fbbc05; }
+        .google-g2 { color: #4285f4; }
+        .google-l { color: #34a853; }
+        .google-e { color: #ea4335; }
+
+        .store-tag {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-left: 0.25rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid transparent;
+        }
+
+        nav a:hover {
+            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        nav a.active {
+            color: #ffffff;
+            background-color: var(--accent-primary);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+        }
+
+        /* Container & Views */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+        }
+
+        .view {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* PAGE BANNERS */
+        .page-banner {
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .banner-home {
+            background-color: rgba(66, 133, 244, 0.15);
+            border: 1px solid var(--accent-primary);
+            color: #93c5fd;
+        }
+
+        .banner-phones {
+            background-color: rgba(79, 70, 229, 0.15);
+            border: 1px solid var(--accent-indigo);
+            color: #c7d2fe;
+        }
+
+        .banner-config {
+            background-color: rgba(251, 191, 36, 0.15);
+            border: 1px solid #fbbc05;
+            color: #fde68a;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: radial-gradient(circle at center, rgba(66, 133, 244, 0.15) 0%, transparent 60%);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
+        }
+
+        /* PHONES VIEW */
+        .phone-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin-top: 1rem;
+        }
+
+        .phone-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .phone-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 25px -5px rgba(66, 133, 244, 0.25);
+        }
+
+        .phone-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .phone-card .price {
+            font-size: 1.3rem;
+            color: var(--accent-primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Product image styled beautifully using pure CSS */
+        .phone-visual {
+            width: 150px;
+            height: 260px;
+            border-radius: 24px;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 4px solid #475569;
+            margin-bottom: 1.5rem;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .phone-visual.indigo {
+            background: linear-gradient(145deg, #312e81, #1e1b4b);
+            border-color: #4f46e5;
+        }
+
+        .phone-visual::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            width: 50px;
+            height: 12px;
+            border-radius: 10px;
+            background-color: #0f172a;
+        }
+
+        .phone-visual .screen-content {
+            width: 85%;
+            height: 80%;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .btn {
+            background-color: var(--accent-primary);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(66, 133, 244, 0.2);
+        }
+
+        .btn:hover {
+            background-color: #3367d6;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* CONFIGURATOR VIEW - OPTIMIZED FOR HEIGHT */
+        .config-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 3rem;
+            margin-top: 1rem;
+        }
+
+        .config-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            position: sticky;
+            top: 100px;
+            height: 480px;
+        }
+
+        .config-right h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .config-right .price-large {
+            font-size: 1.7rem;
+            color: var(--accent-primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .config-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .config-section h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+        }
+
+        .option-group {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .option-btn {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 12px;
+            padding: 0.8rem 0.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-main);
+        }
+
+        .option-btn.selected {
+            border-color: var(--accent-primary);
+            color: var(--text-main);
+            background-color: rgba(66, 133, 244, 0.15);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.15);
+        }
+
+        /* Special Indigo Button style */
+        .option-btn[data-value="Indigo"].selected {
+            border-color: var(--accent-indigo);
+            background-color: rgba(79, 70, 229, 0.15);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+        }
+
+        /* Summary & Order Box */
+        .summary-card {
+            background-color: rgba(66, 133, 244, 0.04);
+            border: 2px dashed var(--accent-primary);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.05rem;
+        }
+
+        .summary-item .label {
+            color: var(--text-secondary);
+        }
+
+        .summary-item .val {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .btn-checkout {
+            margin-top: 1.2rem;
+            background-color: var(--success-color);
+            font-size: 1.25rem;
+            padding: 1rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-checkout:hover {
+            background-color: #059669;
+        }
+
+        .btn-checkout:disabled {
+            background-color: var(--border-color);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* SUCCESS VIEW */
+        .success-view {
+            text-align: center;
+            padding: 4rem 2.5rem;
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 24px;
+            max-width: 600px;
+            margin: 3rem auto;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            font-size: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem auto;
+            border: 3px solid var(--success-color);
+        }
+
+        .success-view h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+        }
+
+        .success-view p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container" id="logo-home">
+            <span class="google-logo">
+                <span class="google-g">G</span>
+                <span class="google-o1">o</span>
+                <span class="google-o2">o</span>
+                <span class="google-g2">g</span>
+                <span class="google-l">l</span>
+                <span class="google-e">e</span>
+            </span>
+            <span class="store-tag">Store</span>
+        </div>
+        <nav>
+            <a id="nav-home" class="active" href="javascript:void(0)">Home</a>
+            <a id="nav-phones" href="javascript:void(0)">Phones</a>
+            <a id="nav-watches" href="javascript:void(0)">Watches</a>
+            <a id="nav-accessories" href="javascript:void(0)">Accessories</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+        <!-- HOME VIEW -->
+        <div id="view-home" class="view active">
+            <div class="page-banner banner-home">
+                <span>🏠</span> Current Page: Google Store Home
+            </div>
+            <div class="hero">
+                <h1>Welcome to the Google Store</h1>
+                <p>Explore the newest products from Google. Designed to help you do more of what you love, powered by Google's custom chips and advanced AI models.</p>
+                <div style="max-width: 300px; margin: 0 auto;">
+                    <button class="btn" id="hero-shop-phones">Explore Phones</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHONES VIEW -->
+        <div id="view-phones" class="view">
+            <div class="page-banner banner-phones">
+                <span>📱</span> Current Page: Phones Collection
+            </div>
+            <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem; font-weight: 800;">Phones</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Choose the right Google Pixel phone for you.</p>
+            
+            <div class="phone-grid">
+                <div class="phone-card">
+                    <div class="phone-visual">
+                        <div class="screen-content">Pixel 9</div>
+                    </div>
+                    <h3>Pixel 9</h3>
+                    <p class="price">$799</p>
+                    <button class="btn" id="buy-pixel-9">Buy</button>
+                </div>
+
+                <div class="phone-card" id="card-pixel-10">
+                    <div class="phone-visual" style="border-color: #4285f4;">
+                        <div class="screen-content">Pixel 10</div>
+                    </div>
+                    <h3>Pixel 10</h3>
+                    <p class="price">$999</p>
+                    <button class="btn" id="buy-pixel-10">Buy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONFIGURATOR VIEW -->
+        <div id="view-config" class="view">
+            <div class="page-banner banner-config">
+                <span>⚙️</span> Current Page: Pixel 10 Configurator
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <a id="back-to-phones" style="color: var(--accent-primary); cursor: pointer; font-size: 1.1rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;" href="javascript:void(0)">&larr; Back to Phones</a>
+            </div>
+
+            <div class="config-layout">
+                <!-- Visual Phone Render -->
+                <div class="config-left">
+                    <div class="phone-visual" id="interactive-phone-render" style="margin-bottom: 0.5rem; width: 140px; height: 240px;">
+                        <div class="screen-content" id="screen-label" style="text-align: center; padding: 1rem; font-size: 1.1rem;">
+                            Pixel 10
+                        </div>
+                    </div>
+                    <div style="font-weight: 600; font-size: 1.15rem; color: var(--text-secondary); margin-top: 1rem;" id="phone-color-indicator">Color: Obsidian</div>
+                </div>
+
+                <!-- Product Configuration Options -->
+                <div class="config-right">
+                    <h2>Pixel 10</h2>
+                    <div class="price-large">$999</div>
+
+                    <!-- Step 1: Color -->
+                    <div class="config-section">
+                        <h4>1. Select Color</h4>
+                        <div class="option-group" id="group-color">
+                            <button class="option-btn selected" data-type="color" data-value="Obsidian">Obsidian</button>
+                            <button class="option-btn" data-type="color" data-value="Indigo">Indigo</button>
+                            <button class="option-btn" data-type="color" data-value="Porcelain">Porcelain</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Storage -->
+                    <div class="config-section">
+                        <h4>2. Select Storage Space</h4>
+                        <div class="option-group" id="group-storage">
+                            <button class="option-btn" data-type="storage" data-value="128 GB">128 GB</button>
+                            <button class="option-btn" data-type="storage" data-value="256 GB">256 GB</button>
+                            <button class="option-btn" data-type="storage" data-value="512 GB">512 GB</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Carrier -->
+                    <div class="config-section">
+                        <h4>3. Choose Carrier</h4>
+                        <div class="option-group" id="group-carrier">
+                            <button class="option-btn" data-type="carrier" data-value="Unlocked">Unlocked</button>
+                            <button class="option-btn" data-type="carrier" data-value="Google Fi">Google Fi</button>
+                            <button class="option-btn" data-type="carrier" data-value="Verizon">Verizon</button>
+                        </div>
+                    </div>
+
+                    <!-- Selection Summary Card -->
+                    <div class="summary-card">
+                        <div class="summary-item">
+                            <span class="label">Device:</span>
+                            <span class="val">Pixel 10</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Color:</span>
+                            <span class="val" id="summary-color">Obsidian</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Storage:</span>
+                            <span class="val" id="summary-storage" style="color: #ef4444;">Not Selected</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Carrier:</span>
+                            <span class="val" id="summary-carrier" style="color: #ef4444;">Not Selected</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-checkout" id="btn-confirm-checkout" disabled>Confirm Checkout</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUCCESS VIEW -->
+        <div id="view-success" class="view">
+            <div class="success-view">
+                <div class="success-icon">&checkmark;</div>
+                <h2>Order Confirmed!</h2>
+                <p>Your Pixel 10 configuration has been completed and added to your cart successfully.</p>
+                <div style="background-color: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 2px solid var(--border-color); text-align: left; font-size: 1.1rem;">
+                    <div style="margin-bottom: 0.8rem; font-weight: 700; font-size: 1.2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.4rem;">Configuration Summary:</div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;"><span style="color: var(--text-secondary);">Model:</span><strong>Pixel 10</strong></div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;"><span style="color: var(--text-secondary);">Color:</span><strong id="final-color">Indigo</strong></div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;"><span style="color: var(--text-secondary);">Storage:</span><strong id="final-storage">128 GB</strong></div>
+                    <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-secondary);">Carrier:</span><strong id="final-carrier">Google Fi</strong></div>
+                </div>
+                <button class="btn" id="btn-done">Return to Store</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // State Management
+        let selectedColor = "Obsidian";
+        let selectedStorage = null;
+        let selectedCarrier = null;
+
+        // View Toggling Helpers
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(viewId).classList.add('active');
+
+            // Update Active Navigation Item
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            if (viewId === 'view-home') {
+                document.getElementById('nav-home').classList.add('active');
+            } else if (viewId === 'view-phones' || viewId === 'view-config') {
+                document.getElementById('nav-phones').classList.add('active');
+            }
+        }
+
+        // Header and Nav Actions
+        document.getElementById('logo-home').addEventListener('click', () => showView('view-home'));
+        document.getElementById('nav-home').addEventListener('click', () => showView('view-home'));
+        document.getElementById('nav-phones').addEventListener('click', () => showView('view-phones'));
+        document.getElementById('hero-shop-phones').addEventListener('click', () => showView('view-phones'));
+        document.getElementById('back-to-phones').addEventListener('click', () => showView('view-phones'));
+
+        // Buy Pixel 10 Action
+        document.getElementById('buy-pixel-10').addEventListener('click', () => {
+            showView('view-config');
+        });
+
+        // Configurator Option Selection Handler
+        document.querySelectorAll('.option-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const type = e.target.getAttribute('data-type');
+                const val = e.target.getAttribute('data-value');
+
+                // Toggle selected class within same group
+                const group = e.target.parentElement;
+                group.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+                e.target.classList.add('selected');
+
+                if (type === 'color') {
+                    selectedColor = val;
+                    document.getElementById('summary-color').textContent = val;
+                    document.getElementById('phone-color-indicator').textContent = `Color: ${val}`;
+                    
+                    const render = document.getElementById('interactive-phone-render');
+                    const label = document.getElementById('screen-label');
+                    if (val === 'Indigo') {
+                        render.className = "phone-visual indigo";
+                        label.style.color = "#a5b4fc";
+                        label.textContent = "Pixel 10 (Indigo)";
+                    } else if (val === 'Porcelain') {
+                        render.className = "phone-visual";
+                        render.style.background = "linear-gradient(145deg, #f1f5f9, #cbd5e1)";
+                        render.style.borderColor = "#94a3b8";
+                        label.style.color = "#1e293b";
+                        label.textContent = "Pixel 10 (Porcelain)";
+                    } else {
+                        render.className = "phone-visual";
+                        render.style.background = "";
+                        render.style.borderColor = "";
+                        label.style.color = "";
+                        label.textContent = "Pixel 10 (Obsidian)";
+                    }
+                } else if (type === 'storage') {
+                    selectedStorage = val;
+                    const el = document.getElementById('summary-storage');
+                    el.textContent = val;
+                    el.style.color = "";
+                } else if (type === 'carrier') {
+                    selectedCarrier = val;
+                    const el = document.getElementById('summary-carrier');
+                    el.textContent = val;
+                    el.style.color = "";
+                }
+
+                // Check if checkout can be enabled
+                const checkoutBtn = document.getElementById('btn-confirm-checkout');
+                if (selectedColor && selectedStorage && selectedCarrier) {
+                    checkoutBtn.removeAttribute('disabled');
+                } else {
+                    checkoutBtn.setAttribute('disabled', 'true');
+                }
+            });
+        });
+
+        // Checkout Button Action
+        document.getElementById('btn-confirm-checkout').addEventListener('click', () => {
+            document.getElementById('final-color').textContent = selectedColor;
+            document.getElementById('final-storage').textContent = selectedStorage;
+            document.getElementById('final-carrier').textContent = selectedCarrier;
+            showView('view-success');
+        });
+
+        document.getElementById('btn-done').addEventListener('click', () => {
+            // Reset State
+            selectedColor = "Obsidian";
+            selectedStorage = null;
+            selectedCarrier = null;
+            
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelector('[data-value="Obsidian"]').classList.add('selected');
+            
+            document.getElementById('summary-color').textContent = "Obsidian";
+            document.getElementById('phone-color-indicator').textContent = "Color: Obsidian";
+            
+            const render = document.getElementById('interactive-phone-render');
+            render.className = "phone-visual";
+            render.style.background = "";
+            render.style.borderColor = "";
+            document.getElementById('screen-label').textContent = "Pixel 10";
+            document.getElementById('screen-label').style.color = "";
+
+            const storageSummary = document.getElementById('summary-storage');
+            storageSummary.textContent = "Not Selected";
+            storageSummary.style.color = "#ef4444";
+
+            const carrierSummary = document.getElementById('summary-carrier');
+            carrierSummary.textContent = "Not Selected";
+            carrierSummary.style.color = "#ef4444";
+
+            document.getElementById('btn-confirm-checkout').setAttribute('disabled', 'true');
+            
+            showView('view-home');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Virtual environment
+.venv/
+venv/
+ENV/
+
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Dynamic downloaded data & logs
+talent_acquisition_records.csv
+*.log
