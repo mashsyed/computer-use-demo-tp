@@ -1,100 +1,100 @@
-# Gemini Computer Use Web Agent Demo
+# 🏎️ Gemini Computer Use ADK Agent (Mercedes-Benz Talent Acquisition Portal)
 
-This repository contains a Python script (`web_agent.py`) demonstrating a powerful, multi-turn web automation agent powered by the **Gemini Computer Use** tool. The agent uses Playwright to programmatically control a web browser, analyzing the visual layout on every turn and taking natural browser actions (typing, clicking, navigating) to complete complex user goals.
+This repository showcases how to implement and run a **Custom Agent** using Google's **Agent Development Kit (ADK)** and its official, interactive **ADK Developer Playground Web UI**. 
+
+Instead of a standalone custom-built web application, this repo demonstrates how developers can leverage the rich, native ADK ecosystem to easily test, debug, and run **Gemini 2.5 Computer Use** with full, live browser automation streams directly in their web browser.
 
 ---
 
-## 🏎️ Mercedes-Benz Portal Demo Overview
+## 🌟 What This Repository Showcases
 
-This version is specifically configured to test and verify complex multi-turn workflows against a high-fidelity local replica of the **Mercedes-Benz Talent Acquisition Portal** (`index.html`). 
+This agent is configured to automate complex, multi-turn recruitment and data extraction workflows against a high-fidelity local replica of the **Mercedes-Benz Talent Acquisition Portal** (`index.html`).
 
-### What the Application Does
-1. **Dynamic Local Server**: Launches a lightweight, background HTTP server serving the luxury-themed recruitment portal locally.
-2. **Interactive Sign-In**: The agent automatically identifies suggested login credentials, inputs the recruiter email and password, and authenticates.
-3. **Report Generation & Download**:
-   - Accepts specific starting and ending dates in natural language.
-   - Operates the UI to input those dates cleanly.
-   - Clicks the `"Generate & Download CSV"` button.
-4. **Intercepts & Saves Downloads**: Includes a native Playwright download listener that captures client-side files compiled by the app and saves them directly into the current directory.
+### 1. The Power of Google's Agent Development Kit (ADK)
+* **Interactive Developer UI**: Spins up a local playground server allowing you to chat with your agent, trigger tasks, and watch the agent's browser window execute actions (clicks, keyboard input, navigations) in a live side-by-side split screen.
+* **Declarative Agent Orchestration**: Uses ADK’s modular `Agent`, `App`, and `ComputerUseToolset` classes for cleaner, enterprise-grade architecture.
+
+### 2. Standard Enterprise-Grade Optimizations
+* **Automatic Context Caching (Cost & Latency Reduction)**: Uses ADK's native `ContextCacheConfig` to cache repetitive session histories (such as previous screenshots and instructions) on Google's servers. This slashes multi-turn input token costs by **75% to 90%** and decreases model response times.
+* **Structured Cost Tracker & Auditor**: Automatically calculates the actual USD cost of each turn based on standard Gemini 2.5 Pro pricing ($1.25/1M input, $10.00/1M output). It logs this structured data locally to `app/session_costs.csv` (perfect for spreadsheet audits) and `app/session_costs.log`, and prints live summaries to the terminal console!
+* **Dynamic Multi-Backend Selection**: Gracefully checks for a local `GEMINI_API_KEY`. If present, it routes requests through the lightning-fast **Google AI Studio (Gemini Developer API)**. If absent, it securely defaults to Vertex AI using standard `gcloud` Application Default Credentials (ADC).
+* **Conversational Short-Circuiting**: Subclasses Gemini with a custom greeting interceptor. Simple pleasantries (like *"hello"* or *"hi"*) are responded to instantly in text without starting the browser or spending expensive visual tokens!
 
 ---
 
 ## 🛠️ Requirements & Prerequisites
 
-Ensure the following are installed and configured on your machine:
+Ensure you have the following installed on your machine:
 
-1. **Python 3.9+** (and standard virtual environment utilities).
-2. **Google Cloud SDK (`gcloud` CLI)**.
-3. **Application Default Credentials (ADC)** set up on your machine:
+1. **Python 3.10+** (and standard virtual environment utilities).
+2. **Google Cloud SDK (`gcloud` CLI)** — *required if using Vertex AI backend.*
+3. **Application Default Credentials (ADC)** — *required if using Vertex AI backend:*
    ```bash
    gcloud auth application-default login
    ```
-4. **Active Google Cloud Project ID** with Vertex AI enabled.
+4. **Google AI Studio API Key** (Recommended for local developer speeds and free-tier optimization):
+   ```bash
+   export GEMINI_API_KEY="AIzaSy..."
+   ```
 
 ---
 
 ## 🚀 Setup & Execution Instructions
 
-Follow these steps to set up and execute the agent locally:
-
 ### 1. Initialize Virtual Environment & Install Dependencies
+First, create your environment and install the required packages:
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-playwright install
+playwright install chromium
 ```
 
-### 2. Configure Environment Variables
-Set your Google Cloud Project ID and location:
-```bash
-export GOOGLE_CLOUD_PROJECT="[your-project-id]"
-export GOOGLE_LOCATION="global"
-export MODEL_ID="gemini-2.5-computer-use-preview-10-2025"
-export USE_MERCEDES_PORTAL="true"
-```
-
-### 3. Run the Agent
-
-#### Option A: Headless Mode (Standard Verification)
-Runs the entire flow in the background (headless browser) and automatically intercept-saves the generated CSV to the local directory:
-```bash
-export HEADLESS="true"
-python web_agent.py "Open a new browser tab and navigate to http://127.0.0.1:8000. Type 'recruiter@mercedes-benz.com' in the email box, type 'PremiumCareer2026' in the password box, and click Authenticate. Once the export page loads, select '2026-07-01' as the starting date, '2026-07-15' as the ending date, and click Generate & Download CSV."
-```
-
-#### Option B: Visible Mode (Interactive Demo)
-Launches a visible Chromium window on your screen so you can watch the agent work in real-time.
-
-> [!IMPORTANT]
-> **macOS Screen Recording Permissions Required for Option B**:
-> - If prompted by macOS when the browser opens, navigate to **System Settings > Privacy & Security > Screen Recording** and check the box to allow your terminal/IDE.
-> - **You must completely quit (`Cmd + Q`) and restart your terminal/editor** after granting this permission. Otherwise, the agent will receive blank screenshots and fail to execute actions.
+### 2. Launch the Interactive ADK Playground
+To launch the agent inside the rich ADK Developer Playground Web UI, run:
 
 ```bash
-export HEADLESS="false"
-python web_agent.py "Open a new browser tab and navigate to http://127.0.0.1:8000. Type 'recruiter@mercedes-benz.com' in the email box, type 'PremiumCareer2026' in the password box, and click Authenticate. Once the export page loads, select '2026-07-01' as the starting date, '2026-07-15' as the ending date, and click Generate & Download CSV."
+UV_DEFAULT_INDEX="https://pypi.org/simple" agents-cli playground
 ```
 
-*Note: When executing the click action to download the CSV, the console will prompt you to confirm the action. Press `y` and `Enter` in the terminal to continue.*
+Once executed, your console will print:
+```text
+Starting your agent playground...
+Will be available at: http://127.0.0.1:8080/dev-ui/?app=app
+```
+
+### 3. Run the Automation
+1. Open the URL `http://127.0.0.1:8080/dev-ui/?app=app` in your browser.
+2. In the chat interface, click **New Session** at the top right to clear any active history.
+3. Submit a goal to the agent, such as:
+   > *"Open the browser, log into the portal at http://127.0.0.1:8000 using recruiter@mercedes-benz.com / PremiumCareer2026, and export talent data for July 1st through July 15th."*
+4. **Watch the live stream**: The Web UI will show you exactly what the agent is seeing, where its virtual cursor is clicking, and what actions it takes in real-time!
 
 ---
 
-## 🔍 Root Cause Analysis & Technical Fixes
+## 📊 cost & Action Auditing (Data Analysis)
 
-Before these updates, the agent was experiencing failures during multi-turn automation. The following sections outline the specific diagnostic findings and resolutions implemented:
+Every single browser interaction (click, text typing, scroll) is recorded locally for cost analysis. 
 
-### 1. The Multi-Turn Vision Bug ("Working Blind")
-* **The Symptom**: The agent could successfully complete the first action (such as opening the browser or navigating), but on subsequent turns, it either clicked wildly on incorrect elements or stalled, reporting that it *"did not have the screenshot yet"*.
-* **The Root Cause**: In Gemini's multi-turn Computer-Use vision API, subsequent screenshots returned to the model must be in standard **PNG** format, nested inside the `FunctionResponse` object's inner `parts` list with `mime_type="image/png"`. 
-  The original script captured subsequent screenshots as `image/jpeg` and nested them as jpeg. The Vertex AI backend visual adapter silently discarded these JPEG frames, leaving the model blind on all subsequent turns.
-* **The Fix**: Refactored the screenshot capture logic inside `web_agent.py` to capture screenshots exclusively using standard PNG format and pack them with the correct `"image/png"` mime-type inside the nested `FunctionResponse` parts.
+* **Live Terminal Logs**: See cost breakdowns in your terminal as they happen:
+  ```text
+  💵 [COST TRACKER] Call used 14,842 tokens (14,410 input, 432 output). Estimated Cost: $0.022332 USD
+  ```
+* **Structured Audit Table (`app/session_costs.csv`)**: Compatible with Excel and Pandas, recording:
+  * `timestamp`: Date & Time of action.
+  * `action`: The exact action taken (e.g., `click_at(x=480, y=587)`).
+  * `prompt_tokens`: Input tokens.
+  * `candidates_tokens`: Output tokens.
+  * `total_cost_usd`: Total USD cost of that action.
+* **Readable Action Log (`app/session_costs.log`)**: Plain-text transaction records.
 
-### 2. Schema Violation Mismatches (`400 INVALID_ARGUMENT`)
-* **The Symptom**: Attempts to send screenshots on multi-turn interactions resulted in a `400 INVALID_ARGUMENT` API exception from the Gemini server.
-* **The Root Cause**: When compiling a `user` content response following a model's `function_call`, Gemini's schema rules prohibit mixing `FunctionResponse` parts with sibling `inline_data` parts within the same `Content.parts` list.
-* **The Fix**: Removed sibling parts from the `user` turn message and packed the PNG screenshot strictly inside the `FunctionResponse.parts` list. This adheres perfectly to the Computer-Use API types, resolving all schema exceptions.
+*(Note: `app/session_costs.csv` and `app/session_costs.log` are added to `.gitignore` by default to avoid cluttering your repository with session records).*
 
-### 3. Date Input Selector Optimization
-* **The Symptom**: Attempting to click date numerals inside standard browser/OS date-picker calendar dropdowns often failed or closed the popover window without applying the change, due to date-picker rendering quirks in headless browser layouts.
-* **The Fix**: The input elements in `index.html` were optimized to accept standard keyboard values cleanly. The agent successfully learned to directly type standard dates (e.g. typing `07/01/2026` and `07/15/2026` into the starting and ending date input boxes), guaranteeing 100% reliable execution.
+---
+
+## 📂 Project Architecture
+
+* `app/agent.py`: The core ADK agent definition. Houses our custom `NonStreamingGemini` subclass which intercepts greetings, applies fail-fast retry configurations, runs context caching, and manages token pricing calculations.
+* `app/playwright.py`: Configures the browser, default portal environment flags (`USE_MERCEDES_PORTAL=True`), and viewport resolutions.
+* `index.html`: High-fidelity local Mercedes-Benz Talent Acquisition Portal used for browser automation target testing.
+* `pyproject.toml` & `uv.lock`: Modern python packaging configurations.
