@@ -16,3 +16,4 @@ Thumbs.db
 # Dynamic downloaded data & logs
 talent_acquisition_records.csv
 *.log
+app/session_costs.csv
